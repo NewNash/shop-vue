@@ -119,7 +119,6 @@
 
 <script>
     export default {
-
         name: "BestSeller",
         props: ['title'],
         data() {
@@ -128,7 +127,7 @@
                 mainWidth: 2400,
                 translate: 0,
                 leftpicLength:0,
-                rightpiclength:5
+                rightpiclength:5,
             })
         },
         methods: {

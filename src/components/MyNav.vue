@@ -1,6 +1,18 @@
 <template>
     <div class="container">
         <div class="main">
+            <div class="logobox">
+                <a href="/" class="logo"><img src="../img/logo.png" alt=""></a>
+                <el-button @click="increment"><i class="el-icon-plus"></i></el-button>
+                <p>{{count}}</p>
+                <el-button @click="decrement"><i class="el-icon-minus"></i></el-button>
+                <div class="searchbox">
+                    <label>
+                        <input type="text">
+                    </label>
+                    <i class="el-icon-search "></i>
+                </div>
+            </div>
             <div class="navbox">
                 <ul class="nav">
                     <li>
@@ -13,9 +25,10 @@
                         </router-link>
                     </li>
                 </ul>
-                <div class="subNavBox" v-for="(item,index) in navs"
+                <div v-for="(item,index) in navs"
                      :key="item.id"
-                     v-show="item.sub.show"
+                     :class="item.sub.show?'subNavBox active':'subNavBox'"
+
                      @mouseover="handleMouseOver(index)"
                      @mouseout="handleMouseOut(index)">
                     <div class="info">{{item.sub.name}}</div>
@@ -29,6 +42,11 @@
     export default {
         name: "Nav",
         components: {},
+        computed:{
+          count:function () {
+              return this.$store.state.count
+          }
+        },
         data: () => {
             return ({
                 ifshow: false,
@@ -76,6 +94,12 @@
             handleMouseOut: function (index) {
                 this.navs[index].sub.show = false
             },
+            increment:function(){
+                this.$store.commit('increatement')
+            },
+             decrement:function(){
+                this.$store.commit('decrement')
+            }
         },
         created() {
         }
@@ -92,6 +116,52 @@
         width: 1200px;
         margin: 0 auto;
         position: relative;
+    }
+
+    .logobox {
+        width: 1200px;
+        height: 60px;
+        margin: 10px auto;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .logo {
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    .searchbox {
+        width: 300px;
+        height: 40px;
+        border: 1px solid #bbbbbb;
+        margin-top: 10px;
+        border-radius: 4px;
+    }
+
+    .searchbox input {
+        border: none;
+        outline: none;
+        width: 75%;
+        vertical-align: top;
+        padding: 0 8px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+    }
+
+    .searchbox i {
+        font-size: 38px;
+        color: #c3c3c3;
+    }
+
+    .navbox {
+        position: relative;
+        margin-top: -20px;
     }
 
     .nav {
@@ -126,8 +196,15 @@
         left: 0;
         padding: 20px;
         z-index: 10;
+        opacity: 0;
+        transition: all .3s ease;
+        transform: perspective(500px) rotateX(-90deg);
+        transform-origin: top center 0;
     }
-
+    .subNavBox.active{
+        opacity: 1;
+        transform: perspective(500px) rotateX(0deg);
+    }
     .info {
         color: red;
     }

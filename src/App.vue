@@ -21,6 +21,12 @@ export default {
     text-decoration: none;
     color:#ffffff;
   }
+  a:hover{
+    text-decoration: underline;
+  }
+  ul{
+    list-style: none;
+  }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

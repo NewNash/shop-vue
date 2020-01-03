@@ -1,20 +1,27 @@
 <template>
     <div class="container">
-        <el-carousel class="slider" trigger="click" height="500px">
-            <el-carousel-item v-for="item in pics" :key="item">
-                <div class="slide" :style="{backgroundColor:item }"></div>
+        <el-carousel class="slider" trigger="click" height="600px">
+            <el-carousel-item v-for="(item,index) in imgurls" :key="index">
+                <div class="slide">
+                    <img :src="item.url"   alt="">
+                </div>
             </el-carousel-item>
         </el-carousel>
     </div>
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         name: "MySlider",
         data(){
             return({
-                pics:['#63dea2','#abcdef','#b34524','#eee8be']
+                pics:['#63dea2','#abcdef','#b34524','#eee8be'],
+                imgurls:[]
             })
+        },
+        created() {
+            axios.get('http://127.0.0.1:5000/sliderimgurls').then(res=>this.imgurls=res.data.data).catch((error)=>console.log(error))
         }
     }
 </script>
